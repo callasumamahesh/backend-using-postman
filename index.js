@@ -2,12 +2,13 @@ import express from 'express'
 import connectDB  from './config/db.js'
 import User from './models/User.js';
 import bcrypt from 'bcrypt'
-
+import productRoutes from "./routes/product.js";
 const app = express()
 
 connectDB()
 
 app.use(express.json());
+app.use("/products", productRoutes)
 
 app.post("/login", async (req, res) => {
   try {
