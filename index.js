@@ -38,12 +38,12 @@ app.post("/signup", async (req, res) => {
 
   try {
     const { email, password, confirmPassword } = req.body;
-    if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Passwords do not match" });
-    }
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ message: "User already exists" });
+    }
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: "Passwords do not match" });
     }
     const saltRound = 10;
     const hashedPassword = await bcrypt.hash(password, saltRound)
