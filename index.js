@@ -3,12 +3,17 @@ import connectDB  from './config/db.js'
 import User from './models/User.js';
 import bcrypt from 'bcrypt'
 import productRoutes from "./routes/product.js";
+import cartRoutes from './routes/cart.js'
+import orderRoutes from './routes/order.js'
+
 const app = express()
 
 connectDB()
 
 app.use(express.json());
 app.use("/products", productRoutes)
+app.use("/cart", cartRoutes)
+app.use('/order', orderRoutes)
 
 app.post("/login", async (req, res) => {
   try {
@@ -27,6 +32,7 @@ app.post("/login", async (req, res) => {
     }
     res.status(200).json({
       message: "Login successful",
+      userId: user._id
     });
 
   } catch (error) {
